@@ -1,12 +1,5 @@
 import { NavLink, Link } from 'react-router-dom'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 import {
   LayoutDashboard,
   ArrowLeftRight,
@@ -14,6 +7,7 @@ import {
   Landmark,
   Settings,
   PiggyBank,
+  MessageSquareText,
 } from 'lucide-react'
 
 const navItems = [
@@ -21,6 +15,7 @@ const navItems = [
   { to: '/cash-flow', label: 'Fluxo de Caixa', icon: ArrowLeftRight },
   { to: '/open-finance', label: 'Open Finance', icon: Landmark },
   { to: '/debts', label: 'Dívidas', icon: Banknote },
+  { to: '/whatsapp', label: 'WhatsApp', icon: MessageSquareText },
   { to: '/settings', label: 'Configurações', icon: Settings },
 ]
 
@@ -30,7 +25,7 @@ export const SidebarNav = ({ isMobile = false }: { isMobile?: boolean }) => (
       <NavLink
         key={item.to}
         to={item.to}
-        end
+        end={item.to === '/'}
         className={({ isActive }) =>
           cn(
             'flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-accent',

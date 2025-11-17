@@ -49,7 +49,7 @@ export const Header = () => {
         </Sheet>
       </div>
 
-      <div className="flex-1 text-center">
+      <div className="flex-1 text-center md:text-left">
         <h1 className="text-lg font-semibold">{pageTitle}</h1>
       </div>
 

@@ -9,31 +9,31 @@
     --background: 240 5% 96%; /* #F9FAFB */
     --foreground: 224 71% 4%; /* #1F2937 */
 
-    --card: 0 0% 100%;
+    --card: 0 0% 100%; /* #FFFFFF */
     --card-foreground: 224 71% 4%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 224 71% 4%;
 
-    --primary: 243 84% 60%; /* #4F46E5 */
-    --primary-hover: 243 80% 55%; /* #4338CA */
+    --primary: 222 71% 67%; /* #7091E6 */
+    --primary-hover: 222 71% 62%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 242 84% 67%; /* #6366F1 */
     --secondary-foreground: 0 0% 100%;
 
     --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
+    --muted-foreground: 223 33% 65%; /* #8697C4 */
 
     --accent: 240 5% 94%; /* #EEF2FF related */
-    --accent-foreground: 243 84% 60%;
+    --accent-foreground: 222 71% 67%;
 
     --destructive: 0 84% 60%; /* #EF4444 */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 6% 90%; /* #E5E7EB */
-    --input: 240 6% 90%;
-    --ring: 243 84% 60%;
+    --border: 222 43% 77%; /* #ADBBDAB */
+    --input: 222 43% 77%;
+    --ring: 222 71% 67%;
 
     --radius: 0.75rem; /* 12px */
 
@@ -42,7 +42,7 @@
     --entry: 158 79% 44%; /* #10B981 */
     --exit: 0 84% 60%; /* #EF4444 */
 
-    --chart-1: 243 84% 60%;
+    --chart-1: 222 71% 67%;
     --chart-2: 158 79% 44%;
     --chart-3: 35 92% 55%;
     --chart-4: 20 93% 59%;
@@ -50,25 +50,24 @@
   }
 
   .dark {
-    /* For future dark mode implementation */
     --background: 224 71% 4%;
     --foreground: 240 5% 96%;
 
-    --card: 224 71% 4%;
+    --card: 224 71% 10%;
     --card-foreground: 240 5% 96%;
 
     --popover: 224 71% 4%;
     --popover-foreground: 240 5% 96%;
 
-    --primary: 242 84% 67%;
-    --primary-hover: 243 84% 60%;
+    --primary: 222 71% 67%; /* #7091E6 */
+    --primary-hover: 222 71% 72%;
     --primary-foreground: 224 71% 4%;
 
     --secondary: 243 84% 60%;
     --secondary-foreground: 240 5% 96%;
 
     --muted: 224 71% 4%;
-    --muted-foreground: 240 4% 46%;
+    --muted-foreground: 222 43% 77%; /* #ADBBDAB */
 
     --accent: 224 71% 4%;
     --accent-foreground: 240 5% 96%;
@@ -76,9 +75,9 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 240 5% 96%;
 
-    --border: 240 4% 16%;
-    --input: 240 4% 16%;
-    --ring: 242 84% 67%;
+    --border: 223 33% 65%; /* #8697C4 */
+    --input: 223 33% 65%;
+    --ring: 222 71% 67%;
   }
 }
 
