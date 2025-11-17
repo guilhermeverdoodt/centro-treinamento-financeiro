@@ -16,7 +16,7 @@ const navItems = [
 
 export const BottomNav = () => {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 md:hidden border-t bg-card dark:bg-[hsl(223,33%,65%)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t md:hidden bg-card">
       <div className="grid h-16 grid-cols-4">
         {navItems.map((item) => (
           <NavLink
@@ -27,8 +27,8 @@ export const BottomNav = () => {
               cn(
                 'flex flex-col items-center justify-center gap-1 text-xs font-medium transition-colors',
                 isActive
-                  ? 'text-primary dark:text-primary-foreground'
-                  : 'text-muted-foreground dark:text-foreground hover:text-primary dark:hover:text-primary-foreground',
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-primary',
               )
             }
           >

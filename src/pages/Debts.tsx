@@ -107,7 +107,7 @@ const Debts = () => {
           <Dialog>
             <DialogTrigger asChild>
               <Button>
-                <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Nova Dívida
+                <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Dívida
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -115,29 +115,21 @@ const Debts = () => {
                 <DialogTitle>Nova Dívida</DialogTitle>
               </DialogHeader>
               <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Nome
-                  </Label>
-                  <Input id="name" className="col-span-3" />
+                <div className="space-y-2">
+                  <Label htmlFor="name">Nome</Label>
+                  <Input id="name" placeholder="Ex: Empréstimo Carro" />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="creditor" className="text-right">
-                    Credor
-                  </Label>
-                  <Input id="creditor" className="col-span-3" />
+                <div className="space-y-2">
+                  <Label htmlFor="creditor">Credor</Label>
+                  <Input id="creditor" placeholder="Ex: Banco X" />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="value" className="text-right">
-                    Valor Original
-                  </Label>
-                  <Input id="value" type="number" className="col-span-3" />
+                <div className="space-y-2">
+                  <Label htmlFor="value">Valor Original</Label>
+                  <Input id="value" type="number" placeholder="R$ 0,00" />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="due-date" className="text-right">
-                    Vencimento
-                  </Label>
-                  <Input id="due-date" type="date" className="col-span-3" />
+                <div className="space-y-2">
+                  <Label htmlFor="due-date">Vencimento</Label>
+                  <Input id="due-date" type="date" />
                 </div>
               </div>
               <DialogFooter>
@@ -147,65 +139,115 @@ const Debts = () => {
           </Dialog>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome da Dívida/Credor</TableHead>
-                <TableHead>Valor Restante</TableHead>
-                <TableHead>Progresso</TableHead>
-                <TableHead>Vencimento</TableHead>
-                <TableHead>
-                  <span className="sr-only">Ações</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {mockDebts.map((debt) => {
-                const progress =
-                  ((debt.originalValue - debt.remainingValue) /
-                    debt.originalValue) *
-                  100
-                return (
-                  <TableRow key={debt.id}>
-                    <TableCell>
-                      <div className="font-medium">{debt.name}</div>
-                      <div className="text-sm text-muted-foreground">
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nome da Dívida/Credor</TableHead>
+                  <TableHead>Valor Restante</TableHead>
+                  <TableHead>Progresso</TableHead>
+                  <TableHead>Vencimento</TableHead>
+                  <TableHead className="text-right">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mockDebts.map((debt) => {
+                  const progress =
+                    ((debt.originalValue - debt.remainingValue) /
+                      debt.originalValue) *
+                    100
+                  return (
+                    <TableRow key={debt.id}>
+                      <TableCell>
+                        <div className="font-medium">{debt.name}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {debt.creditor}
+                        </div>
+                      </TableCell>
+                      <TableCell>R$ {debt.remainingValue.toFixed(2)}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Progress value={progress} className="w-[100px]" />
+                          <span>{progress.toFixed(0)}%</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        {format(new Date(debt.dueDate), 'dd/MM/yyyy')}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem>
+                              <Eye className="mr-2 h-4 w-4" /> Ver Detalhes
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <HandCoins className="mr-2 h-4 w-4" /> Registrar
+                              Pagamento
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="space-y-4 md:hidden">
+            {mockDebts.map((debt) => {
+              const progress =
+                ((debt.originalValue - debt.remainingValue) /
+                  debt.originalValue) *
+                100
+              return (
+                <Card key={debt.id} className="p-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-1">
+                      <p className="font-medium">{debt.name}</p>
+                      <p className="text-sm text-muted-foreground">
                         {debt.creditor}
-                      </div>
-                    </TableCell>
-                    <TableCell>R$ {debt.remainingValue.toFixed(2)}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Progress value={progress} className="w-[100px]" />
-                        <span>{progress.toFixed(0)}%</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {format(new Date(debt.dueDate), 'dd/MM/yyyy')}
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem>
-                            <Eye className="mr-2 h-4 w-4" /> Ver Detalhes
-                          </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            <HandCoins className="mr-2 h-4 w-4" /> Registrar
-                            Pagamento
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
+                      </p>
+                      <p className="text-sm text-muted-foreground pt-1">
+                        Vence em: {format(new Date(debt.dueDate), 'dd/MM/yyyy')}
+                      </p>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="h-8 w-8 p-0 -mr-2">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>
+                          <Eye className="mr-2 h-4 w-4" /> Ver Detalhes
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <HandCoins className="mr-2 h-4 w-4" /> Registrar
+                          Pagamento
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                  <div className="mt-2">
+                    <div className="flex justify-between items-baseline mb-1">
+                      <span className="text-lg font-semibold">
+                        R$ {debt.remainingValue.toFixed(2)}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {progress.toFixed(0)}% pago
+                      </span>
+                    </div>
+                    <Progress value={progress} className="h-2" />
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
         </CardContent>
       </Card>
     </div>

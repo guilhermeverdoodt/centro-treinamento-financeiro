@@ -154,7 +154,7 @@ const CashFlow = () => {
           <Dialog>
             <DialogTrigger asChild>
               <Button>
-                <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Nova Transação
+                <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Transação
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -162,13 +162,11 @@ const CashFlow = () => {
                 <DialogTitle>Nova Transação</DialogTitle>
               </DialogHeader>
               <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="type" className="text-right">
-                    Tipo
-                  </Label>
+                <div className="space-y-2">
+                  <Label htmlFor="type">Tipo</Label>
                   <Select>
-                    <SelectTrigger className="col-span-3">
-                      <SelectValue />
+                    <SelectTrigger id="type">
+                      <SelectValue placeholder="Selecione o tipo" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="entry">Entrada</SelectItem>
@@ -176,35 +174,28 @@ const CashFlow = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="description" className="text-right">
-                    Descrição
-                  </Label>
-                  <Input id="description" className="col-span-3" />
+                <div className="space-y-2">
+                  <Label htmlFor="description">Descrição</Label>
+                  <Input id="description" placeholder="Ex: Salário" />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="value" className="text-right">
-                    Valor
-                  </Label>
-                  <Input id="value" type="number" className="col-span-3" />
+                <div className="space-y-2">
+                  <Label htmlFor="value">Valor</Label>
+                  <Input id="value" type="number" placeholder="R$ 0,00" />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="date" className="text-right">
-                    Data
-                  </Label>
-                  <Input id="date" type="date" className="col-span-3" />
+                <div className="space-y-2">
+                  <Label htmlFor="date">Data</Label>
+                  <Input id="date" type="date" />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="category" className="text-right">
-                    Categoria
-                  </Label>
+                <div className="space-y-2">
+                  <Label htmlFor="category">Categoria</Label>
                   <Select>
-                    <SelectTrigger className="col-span-3">
-                      <SelectValue />
+                    <SelectTrigger id="category">
+                      <SelectValue placeholder="Selecione a categoria" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="food">Alimentação</SelectItem>
                       <SelectItem value="housing">Moradia</SelectItem>
+                      <SelectItem value="salary">Salário</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -216,57 +207,109 @@ const CashFlow = () => {
           </Dialog>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>
-                  <Button variant="ghost">
-                    Data <ArrowUpDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </TableHead>
-                <TableHead>Descrição</TableHead>
-                <TableHead>Categoria</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead>Origem</TableHead>
-                <TableHead className="text-right">Valor</TableHead>
-                <TableHead>
-                  <span className="sr-only">Ações</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {mockTransactions.map((transaction) => (
-                <TableRow key={transaction.id}>
-                  <TableCell>
-                    {format(new Date(transaction.date), 'dd/MM/yyyy')}
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    {transaction.description}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{transaction.category}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <span
-                      className={
-                        transaction.type === 'Entrada'
-                          ? 'text-entry'
-                          : 'text-exit'
-                      }
+          <div className="hidden md:block">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>
+                    <Button
+                      variant="ghost"
+                      className="px-0 hover:bg-transparent"
                     >
-                      {transaction.type}
-                    </span>
-                  </TableCell>
-                  <TableCell>{transaction.origin}</TableCell>
-                  <TableCell
-                    className={`text-right font-semibold ${transaction.type === 'Entrada' ? 'text-entry' : 'text-exit'}`}
-                  >
-                    R$ {transaction.value.toFixed(2)}
-                  </TableCell>
-                  <TableCell>
+                      Data <ArrowUpDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  </TableHead>
+                  <TableHead>Descrição</TableHead>
+                  <TableHead>Categoria</TableHead>
+                  <TableHead>Tipo</TableHead>
+                  <TableHead>Origem</TableHead>
+                  <TableHead className="text-right">Valor</TableHead>
+                  <TableHead>
+                    <span className="sr-only">Ações</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {mockTransactions.map((transaction) => (
+                  <TableRow key={transaction.id}>
+                    <TableCell>
+                      {format(new Date(transaction.date), 'dd/MM/yyyy')}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {transaction.description}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{transaction.category}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className={
+                          transaction.type === 'Entrada'
+                            ? 'text-entry'
+                            : 'text-exit'
+                        }
+                      >
+                        {transaction.type}
+                      </span>
+                    </TableCell>
+                    <TableCell>{transaction.origin}</TableCell>
+                    <TableCell
+                      className={`text-right font-semibold ${transaction.type === 'Entrada' ? 'text-entry' : 'text-exit'}`}
+                    >
+                      R$ {transaction.value.toFixed(2)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem>
+                            <Edit className="mr-2 h-4 w-4" /> Editar
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive focus:text-destructive">
+                            <Trash2 className="mr-2 h-4 w-4" /> Excluir
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="space-y-4 md:hidden">
+            {mockTransactions.map((transaction) => (
+              <Card key={transaction.id} className="p-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 space-y-1">
+                    <p className="font-medium">{transaction.description}</p>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Badge variant="outline" className="font-normal">
+                        {transaction.category}
+                      </Badge>
+                      <span>•</span>
+                      <span>{transaction.origin}</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground pt-1">
+                      {format(new Date(transaction.date), 'dd/MM/yyyy')}
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end">
+                    <p
+                      className={`font-semibold ${transaction.type === 'Entrada' ? 'text-entry' : 'text-exit'}`}
+                    >
+                      {transaction.type === 'Entrada' ? '+' : '-'} R${' '}
+                      {transaction.value.toFixed(2)}
+                    </p>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
+                        <Button
+                          variant="ghost"
+                          className="h-8 w-8 p-0 mt-2 -mr-2"
+                        >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -274,16 +317,16 @@ const CashFlow = () => {
                         <DropdownMenuItem>
                           <Edit className="mr-2 h-4 w-4" /> Editar
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
+                        <DropdownMenuItem className="text-destructive focus:text-destructive">
                           <Trash2 className="mr-2 h-4 w-4" /> Excluir
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>
